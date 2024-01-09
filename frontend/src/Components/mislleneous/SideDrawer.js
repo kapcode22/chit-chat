@@ -55,7 +55,8 @@ function SideDrawer() {
     localStorage.removeItem("userInfo");
     history.push("/");
   };
-
+// Provides functionality to search users, display notifications, handle user profile, and logout.
+// Handles searching for users based on name or email by making a GET request to the backend API.
   const handleSearch = async () => {
     if (!search) {
       toast({
@@ -92,7 +93,7 @@ function SideDrawer() {
       });
     }
   };
-
+//Displays a list of users in a drawer based on search results and allows the user to click on them to access chats.
   const accessChat = async (userId) => {
     console.log(userId);
 

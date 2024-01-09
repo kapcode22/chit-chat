@@ -34,6 +34,11 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
   const { selectedChat, setSelectedChat, user } = ChatState();
 
+
+  // Provides functionalities to update the group chat name, search and add users to the group, remove users from the group, and leave the group.
+// Handles updating the group chat name via a PUT request to /api/chat/rename.
+// Allows the admin to add users to the group and remove users from the group via PUT requests to /api/chat/groupadd and /api/chat/groupremove respectively.
+// Manages loading states during these operations and displays appropriate toast notifications in case of errors.
   const handleSearch = async (query) => {
     setSearch(query);
     if (!query) {

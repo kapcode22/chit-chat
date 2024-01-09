@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 
+
+
 const Login = () => {
+    // we use hook to manage state with a functional component
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
@@ -17,8 +20,11 @@ const Login = () => {
         console.log(password);
     }
     
+  //  a function (submitHandler) responsible for handling login form submissions,
     const submitHandler = async () => {
+        // setloading help in indicating some process is ongoing 
         setLoading(true);
+        // Input Field Validation:- If either field is empty, it triggers a toast notification using the toast function  to inform the user that they need to fill in all fields.
         if (!email || !password) {
             toast({
                 title: "Please Fill all the Feilds",
@@ -27,18 +33,20 @@ const Login = () => {
                 isClosable: true,
                 position: "bottom",
             });
+            //  showing the toast notification, it sets setLoading(false) and returns from the function, preventing further execution.
             setLoading(false);
             return;
         }
 
-        // console.log(email, password);
+        // API Request to Backend:If both the email and password fields are filled, it proceeds to make an asynchronous request using Axios to a backend endpoint (/api/user/login) to attempt user login.
+
         try {
             const config = {
                 headers: {
                     "Content-type": "application/json",
                 },
             };
-
+          // // It sends a POST request with the email and password in the request body and sets the content type as JSON.
             const { data } = await axios.post(
                 '/api/user/login',
                 { email, password },
@@ -46,6 +54,7 @@ const Login = () => {
             );
 
             console.log(JSON.stringify(data));
+            // it show a success toast notification indicating successful logiin
             toast({
                 title: "Login Successful",
                 status: "success",
@@ -53,10 +62,14 @@ const Login = () => {
                 isClosable: true,
                 position: "bottom",
             });
+            // stores user info in local storage
             localStorage.setItem("userInfo", JSON.stringify(data));
             setLoading(false);
+            //Navigates the user to the "/chats" route using useHistory hook
             history.push("/chats");
-        } catch (error) {
+        }
+        // error handling 
+        catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 toast({
                     title: "Error Occurred!",

@@ -13,6 +13,9 @@ const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
 
   return (
+
+    // Maps through the messages array and renders each message in the chat.
+//For each message, it checks various conditions using the imported logic functions from chat logics :
     <ScrollableFeed>
       {messages &&
         messages.map((m, i) => (

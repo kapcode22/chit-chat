@@ -17,9 +17,10 @@ const Signup = () => {
     const handleClick = ()=>{
         setShow(!show);
     }
-    
+    // a function which will trigger to handle when Upload image buutonis clicked
     const postDetails = (pics)=>{
         setLoading(true);
+        // image validation
         if(pics===undefined){
             toast({
                 title: 'Please select an Image.',
@@ -30,22 +31,26 @@ const Signup = () => {
               })
             return
         }
+        // image upload to Cloudinary if the file is of the appropriate type
 
         if(pics.type==='image/jpeg' || pics.type==='image/png'){
+            // it creates a FormData object and appends the image file and required parameters for Cloudinary upload
             const data = new FormData()
             data.append('file',pics);
             data.append('upload_preset','chat-app');
             data.append('cloud_name','ddevil');
+
+            // uses fetch to send a POST request to the Cloudinary API endpoint with the FormData as the body. 
             fetch('https://api.cloudinary.com/v1_1/ddevil/image/upload',{
                 method:'post',
                 body:data,
-            }).then((res)=> res.json())
+            }).then((res)=> res.json())// Upon a successful response from Cloudinary, it extracts the URL of the uploaded image from the response data (data.url), sets it using setPic
               .then((data)=>{
                 setPic(data.url.toString());
                 console.log(data.url.toString());
                 setLoading(false);
               })
-              .catch((err)=>{
+              .catch((err)=>{ // error handling
                 console.log(err);
                 setLoading(false)
               })
@@ -62,7 +67,7 @@ const Signup = () => {
             return
         }
     }
-
+ // a function which responsible for handling SIGN UP form submissions,
     const submitHandler = async ()=>{
         setLoading(true);
         if(!name || !email || !password || !confirmPassword){

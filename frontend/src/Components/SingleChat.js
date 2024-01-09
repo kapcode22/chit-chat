@@ -22,6 +22,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  // Sets up WebSocket connection and handles various socket events (setup, connected, typing, stop typing) and their respective actions.
+//Fetches messages for the selected chat and sets up listeners for incoming messages.
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
@@ -37,7 +39,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
-
+// fetchMessages: Fetches chat messages for the selected chat.
+//sendMessage: Sends a new message when the Enter key is pressed.
+// typingHandler: Handles typing status and emits typing events to the WebSocket server.
   const fetchMessages = async () => {
     if (!selectedChat) return;
 
